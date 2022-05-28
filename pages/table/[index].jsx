@@ -29,7 +29,6 @@ import { AiOutlineSend } from "react-icons/ai";
 
 // * components
 import TodoItem from 'components/TodoItem';
-import DeleteTodoModal from 'components/DeleteTodoModal';
 import DeleteModal from 'components/DeleteModal';
 
 export default function Table() {
@@ -140,26 +139,6 @@ export default function Table() {
         setTodoTitle('')
     }
 
-    const handleDeleteTodo = (id) => {
-        const tmpArr = todos
-        setDeleteTodoModal(deleteTodoModal = !deleteTodoModal)
-        const todoList = tmpArr.filter(item => item.id === id)
-        setDeletingTodo(todoList[0])
-    }
-
-    const handleCompleteTodo = (id) => {
-        const filtered = todos.filter(item => item.id == id)
-        updateTodoComplete(filtered[0].id, !filtered[0].complete)
-    }
-
-    const deleteTodoFunc = (id) => {
-        // const tmpArr = todos
-        // const todoList = [...tmpArr.filter(item => item.id !== id)]
-        // setTodos(todoList)
-        console.log(id);
-        deleteTodo(id)
-    }
-
     const deleteTableFunc = () => {
         deleteTable(routeIndex) 
         deleteTodoByTableId(routeIndex)
@@ -174,9 +153,6 @@ export default function Table() {
     return (
 
         <div className='flex items-center justify-center mt-32 mb-10'>
-            <AnimatePresence>
-                {deleteTodoModal && <DeleteTodoModal data={deletingTodo} handleDeleteTodo={handleDeleteTodo} deleteTodo={deleteTodoFunc}/>}
-            </AnimatePresence>
             <AnimatePresence>
                 {showDeleteModal && <DeleteModal modal={closeModalFunc} deleteTable={deleteTableFunc} document={dataDocument}/>}
             </AnimatePresence>
@@ -250,7 +226,7 @@ export default function Table() {
                         {
                             todos.map((todo) => {
                                 return (
-                                    <TodoItem key={todo.id} dataTodo={todo} handleDeleteTodo={handleDeleteTodo} handleCompleteTodo={handleCompleteTodo} toggleSetting={toggleSetting} selectedSetting={selectedSetting} messages={messages}/>
+                                    <TodoItem key={todo.id} dataTodo={todo} toggleSetting={toggleSetting} selectedSetting={selectedSetting} messages={messages}/>
                                 )
                             }) 
                         }

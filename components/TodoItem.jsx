@@ -6,7 +6,7 @@ import {useRouter} from 'next/router';
 import {useSelector} from 'react-redux'
 
 // * supabase 
-import {updateTodo, addMessage} from 'lib/supabaseFunc'
+import {updateTodo, updateTodoComplete, addMessage, deleteTodo} from 'lib/supabaseFunc'
 
 // * framer-motion
 import {motion} from 'framer-motion'
@@ -19,8 +19,6 @@ import { MdDeleteOutline } from "react-icons/md";
 
 export default function TodoItem({
     dataTodo,
-    handleDeleteTodo,
-    handleCompleteTodo,
     toggleSetting,
     selectedSetting,
     messages}) {
@@ -28,6 +26,7 @@ export default function TodoItem({
 
     const [messageContent, setMessageContent] = useState('')
     const [currentMessage, setCurrentMessage] = useState([])
+    const [questionDelete, setQuestionDelete] = useState(false)
 
     const {user} = useSelector(state => state.auth)
     const router = useRouter()
@@ -44,6 +43,10 @@ export default function TodoItem({
     const onChange = (e) => {
         const {value} = e.target
         setMessageContent(value)
+    }
+
+    const handleDeleteTodo = () => {
+        setQuestionDelete(!questionDelete)
     }
 
     return (
@@ -65,7 +68,7 @@ export default function TodoItem({
                 <div className='flex items-center justify-end  pr-10 pt-2 pb-2'>
                     <div className='flex justify-end gap-3'>
                         <motion.div 
-                            onClick={() => handleCompleteTodo(dataTodo.id)}
+                            onClick={() => updateTodoComplete(dataTodo.id, !dataTodo.complete)}
                             className='flex justify-center items-center text-lg text-white rounded-lg w-8 h-8 bg-green-600 cursor-pointer'
                             whileHover={{
                                 scale: 1.1
@@ -77,15 +80,32 @@ export default function TodoItem({
                                 : <ImCheckboxUnchecked/>
                             }
                         </motion.div>
-                        <motion.div 
-                            onClick={() => handleDeleteTodo(dataTodo.id)}
-                            className='flex justify-center items-center text-2xl text-white rounded-lg w-8 h-8 bg-rose-600 cursor-pointer'
-                            whileHover={{
-                                scale: 1.1
-                            }}
-                        >
-                            <MdDeleteOutline/>
-                        </motion.div>
+                        {
+                            !questionDelete
+                            ?   <motion.div 
+                                    onClick={() => handleDeleteTodo()}
+                                    className='flex justify-center items-center text-2xl text-white rounded-lg w-8 h-8 bg-rose-600 cursor-pointer'
+                                    whileHover={{
+                                        scale: 1.1
+                                    }}
+                                >
+                                    <MdDeleteOutline/>
+                                </motion.div>
+                            : <div className='flex items-center gap-1'>
+                                <h6 
+                                    onClick={() => deleteTodo(dataTodo.id)}
+                                    className='px-4 bg-red-500 rounded-xl text-white cursor-pointer'
+                                >
+                                    delete
+                                </h6>
+                                <h6 
+                                    onClick={() => handleDeleteTodo()}
+                                    className='px-4 bg-indigo-500 rounded-xl text-white cursor-pointer'
+                                >
+                                    cancel
+                                </h6>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
