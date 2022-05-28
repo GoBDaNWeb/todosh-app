@@ -1,16 +1,88 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .bg-gradient {
+        background-color: #FF9A8B;
+        background-image: linear-gradient(90deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%);
+    }
+    /* Cursor */
+    .typed-cursor{
+        opacity: 1;
+        background: #fff;
+        color: #fff;
+        animation: typedjsBlink 0.7s infinite;
+        -webkit-animation: typedjsBlink 0.7s infinite;
+        animation: typedjsBlink 0.7s infinite;
+      }
+      @keyframes typedjsBlink{
+        50% { opacity: 0.0; }
+      }
+      @-webkit-keyframes typedjsBlink{
+        0% { opacity: 1; }
+        50% { opacity: 0.0; }
+        100% { opacity: 1; }
+      }
+      .typed-fade-out{
+        opacity: 0;
+        background: #fff;
+        
+        color: #fff;
+        transition: opacity .25s;
+        -webkit-animation: 0;
+        animation: 0;
+      }
+    .welcomeAnim {
+        animation: welcome;
+        animation-duration: 800ms;
+    }
+    .logoAnim {
+        animation: 6s linear infinite normal logo;
+    }
+    .text-shadow {
+        text-shadow: 5px 3px 3px rgba(0,0,0,0.88);
+    }
+    .or {
+        position: relative;
+    }
+    .or::after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 40%;
+        height: 2px;
+        background: #000;
+        top: 50%;
+        left: 32px;
+    }
+    .or::before {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 40%;
+        height: 2px;
+        background: #000;
+        top: 50%;
+        right: 32px;
+    }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@keyframes welcome {
+    0% {
+        opacity: 0;
+        transform: translateY(-300px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-
-* {
-  box-sizing: border-box;
+@keyframes logo {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
