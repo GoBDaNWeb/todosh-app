@@ -1,17 +1,21 @@
+// * react/next
 import { useState } from 'react'
-import {FcGoogle} from 'react-icons/fc'
 import { useRouter } from 'next/router';
+
+// * supabase 
+import {signInWithGoogle, signUp} from 'lib/supabaseFunc'
+
+// * framer-motion
 import { motion } from 'framer-motion';
 import { slideLTR } from '../lib/motions';
-import {useDispatch } from 'react-redux'
-import { signUp, signInWithProvider } from 'store/authSlice';
+
+// * icons
+import {FcGoogle} from 'react-icons/fc'
 
 export default function Register({handleRegister}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirm, setConfirm] = useState('')
-
-    const dispatch = useDispatch()
 
     const onChangeEmail = e => {
         const {value} = e.target
@@ -26,8 +30,6 @@ export default function Register({handleRegister}) {
         setConfirm(value)
     }
 
-    console.log(password);
-
     const router = useRouter()
 
     return (
@@ -40,7 +42,7 @@ export default function Register({handleRegister}) {
         >
             <div className="flex flex-col items-center w-[800px] bg-gray-100 bg-opacity-80 drop-shadow-sm rounded-2xl">
                 <h3 className="text-center text-2xl text-gray-900 font-bold mt-8">
-                    Don't have an account?
+                    Create account
                 </h3>
                 <div className="flex flex-col items-center gap-4 mt-10">
                     <input 
@@ -67,7 +69,7 @@ export default function Register({handleRegister}) {
                         />
                     </div>
                     <motion.button 
-                        onClick={() => dispatch(signUp({email, password, confirm}))}
+                        onClick={() => signUp({email, password, confirm})}
                         className='border-2 border-white w-44 px-4 py-2 rounded-2xl'
                         whileHover={{scale: 1.05}}
                         whileTap={{scale: 0.95}}
@@ -79,7 +81,7 @@ export default function Register({handleRegister}) {
                     Or
                 </h4>
                 <motion.div 
-                    onClick={() => dispatch(signInWithProvider('google'))}
+                    onClick={() => signInWithGoogle()}
                     className="bg-white rounded-full p-2 my-4 cursor-pointer"
                     whileHover={{scale: 1.05}}
                     whileTap={{scale: 0.95}}

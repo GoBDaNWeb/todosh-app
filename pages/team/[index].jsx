@@ -33,8 +33,8 @@ export default function Table() {
                     <div className='w-96 h-[369px] bg-black bg-opacity-50 rounded-xl overflow-y-auto'>
                         <div className='flex flex-col gap-2 items-center overflow-y-auto'>
                             {
-                                dataDocument && dataDocument.members !== null && dataDocument.members.map(member => (
-                                    <div className='text-white'>
+                                dataDocument && dataDocument.members !== null && dataDocument.members.map((member, index) => (
+                                    <div className='text-white' key={index}>
                                         {member.email}
                                     </div>
                                 ))
@@ -48,8 +48,7 @@ export default function Table() {
                     </h4>
                     <div className='flex gap-4 flex-wrap'>
                         {
-                            dataDocument && dataDocument.projects !== null && dataDocument.projects.map((project, index) => (
-                                
+                            dataDocument && dataDocument.projects !== null && dataDocument.projects.map((project, index) => ( 
                                 <Link href={`/table/${project.id}`} key={index} >
                                     <div className='relative w-44 h-44 bg-black bg-opacity-50 rounded-xl bg-team-bg group cursor-pointer overflow-hidden'>
                                         <div className='w-full h-7 bg-black bg-opacity-60 rounded-t-xl text-white font-semibold text-center'>

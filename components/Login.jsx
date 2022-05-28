@@ -1,9 +1,16 @@
+// * react/next
 import { useState } from "react"
+import { useRouter } from 'next/router';
+
+// * supabase
+import {signIn, signInWithGoogle} from 'lib/supabaseFunc'
+
+// * framer-motion
 import { motion } from "framer-motion"
 import {slideLTR} from "../lib/motions"
+
+// * icons
 import {FcGoogle} from 'react-icons/fc'
-import { useRouter } from 'next/router';
-import {signIn} from 'lib/supabaseFunc'
 
 export default function LoginModal({handleLogin}) {
     const [email, setEmail] = useState('')
@@ -60,7 +67,7 @@ export default function LoginModal({handleLogin}) {
                     Or
                 </h4>
                 <motion.div 
-                    onClick={() => googleAuth(router)}
+                    onClick={() => signInWithGoogle()}
                     className="bg-white rounded-full p-2 my-4 cursor-pointer"
                     whileHover={{scale: 1.20}}
                     whileTap={{scale: 0.95}}
